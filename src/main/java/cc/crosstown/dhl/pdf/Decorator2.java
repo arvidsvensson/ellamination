@@ -28,6 +28,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Decorator2 {
 
 private static final String STATIC_GENERATED = "./static/generated";
@@ -168,12 +171,12 @@ private static final String STATIC_GENERATED = "./static/generated";
         	
 	private Image barcode(PdfContentByte cb, Piece piece) {
 		Barcode39 code39ext = new Barcode39();
-		code39ext.setCode(piece.getPiece()); // TODO: normalized??
+		code39ext.setCode(piece.getPieceNormalized());
 		code39ext.setStartStopText(false);
 		code39ext.setTextAlignment(Element.ALIGN_BOTTOM);
 		code39ext.setBarHeight(20);
 		code39ext.setExtended(true);
-		code39ext.setGuardBars(true);
+//		code39ext.setGuardBars(true);
 		code39ext.setAltText(piece.getPiece() + "     " + piece.getWaybill() + "     " + piece.getPage() + " / " + piece.getRow());
 		code39ext.setSize(12.5f);
 		code39ext.setBaseline(13);
