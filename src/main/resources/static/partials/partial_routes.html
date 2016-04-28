@@ -1,0 +1,94 @@
+<meta charset="utf-8">
+
+<div class="page-header">
+	<h1>
+		DHL-Slingor <small>skapa, scanna och skriv ut</small>
+	</h1>
+	<p>
+	<form class="form-inline">
+		<input type="text" class="form-control" ng-model="name"
+			placeholder="Slingans namn"/>
+		<button class="btn btn-default" ng-click="createRoute(name);name=''"
+				type="submit">
+			Skapa
+		</button>
+	</form>
+	</p>
+</div>
+
+<div ng-if="routes && routes.length > 0">
+	<accordion close-others="true"> 
+		<accordion-group ng-repeat="route in routes | reverse" is-open="route.id == lastRoute.id">
+			<accordion-heading>
+				{{route.name}}
+				<button ng-click="removeRoute(route)" class="btn btn-xs btn-danger pull-right">
+					<span class="glyphicon glyphicon-remove"></span>
+				</button>
+			</accordion-heading>
+			<div class="row">
+				<div class="col-sm-5">
+					<form class="form-inline">
+						{{route.id == lastRoute.id}}
+						<input type="text" class="form-control" ng-model="scan"	placeholder="Waybill/Paketnr."
+							ng-attr-autofocus="{{route.id == lastRoute.id}}"
+							to-focus="isLast(route)"
+							/>
+						<button class="btn btn-primary" ng-click="scanPiece(route, scan);scan=''"
+								type="submit">
+							Lägg till
+						</button>
+						<button class="btn btn-success" ng-click="print(route)" ng-disabled="route.drops.length == 0">
+							<span class="glyphicon glyphicon-road"></span>
+						</button>
+						<button class="btn btn-info" ng-click="print2(route)" ng-disabled="route.drops.length == 0">
+							<span class="glyphicon glyphicon-road"></span>
+						</button>
+						<a ng-show="route.urls && route.urls.length > 0"
+								ng-repeat="url in route.urls" type=""
+								ng-href="/generated/{{url}}" target="_blank">PDF </a>
+					</form>
+				</div>
+				<div class="col-sm-1" ng-show="first">
+					<button class="btn btn-warning" ng-click="cancelSecond()">
+						Avbryt
+					</button>
+				</div>
+				<div class="col-sm-5" ng-show="first">
+					<progressbar class="progress-striped active" max="100" value="100" type="warning" animate="false"><i>Scanna den andra koden!</i></progressbar>
+				</div>
+			</div>
+			<br/>
+			<table class="table table-striped" ng-show="route.drops && route.drops.length > 0">
+				<tr>
+					<th>Plats</th>
+					<th>Stopp</th>
+					<th>Sida</th>
+					<th>Rad</th>
+					<th>Waybill</th>
+					<th>Paketnr.</th>
+					<th>Kommando</th>
+				</tr>
+				<tr ng-repeat="drop in route.drops">
+					<td>{{$index + 1}}</td>
+					<td>{{drop.drop}}</td>
+					<td>{{drop.piece.page | dashZero}}</td>
+					<td>{{drop.piece.row | dashZero}}</td>
+					<td>{{drop.piece.waybill}}</td>
+					<td>{{drop.piece.piece}}</td>
+					<td>
+						<div class="btn-group btn-group-xs">
+							<button ng-disabled="!$last" ng-click="combineLast(route)"
+								type="button" class="btn btn-primary">
+								<span class="glyphicon glyphicon-circle-arrow-up"></span>
+							</button>
+							<button ng-click="removePiece(route, drop.piece)"
+								type="button" class="btn btn-danger">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</accordion-group> 
+	</accordion>
+</div>

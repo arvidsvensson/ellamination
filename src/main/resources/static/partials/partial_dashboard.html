@@ -1,0 +1,214 @@
+<meta charset="utf-8">
+
+
+<div class="jumbotron">
+	<div class="container">
+		<h1>Varning!</h1>
+		<p>Bara så att du vet, här kan du verkligen förstöra saker och
+			ting. T.ex. kasta hela databasen (hint: det är dåligt).</p>
+		<p>
+			<a href="#" class="btn btn-primary btn-lg" role="button">Läbbigt,
+				ta mig härifrån nu! &raquo;</a>
+		</p>
+	</div>
+</div>
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">
+				Diverse kommandon <small>Vissa farligare än andra</small>
+			</h2>
+		</div>
+		<div class="panel-body">
+			<div class="btn-group">
+				<button type="button" class="btn btn-danger btn-lg dropdown-toggle"
+					data-toggle="dropdown">
+					Rensa databasen <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li class="dropdown-header">Jag vet vad jag gör</li>
+					<li><a ng-click="drop()">Gört! <small>filer, slingor och paket</small></a></li>
+					<li><a ng-click="dropSettings()">Gört! <small>inställningar</small></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">
+				DHL-pdf:er <small>{{docs.length}} st</small>
+			</h2>
+		</div>
+		<div class="panel-body"></div>
+		<table class="table">
+			<tr>
+				<th>Doc</th>
+				<th>Name</th>
+				<th>Date</th>
+			</tr>
+			<tr ng-repeat="doc in docs">
+				<td>{{doc.id}}</td>
+				<td>{{doc.name}}</td>
+				<td>{{doc.date | date:'yyyy-MM-dd'}}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">
+				DHL-Slingor <small>{{routes.length}} st</small>
+			</h2>
+		</div>
+		<div class="panel-body"></div>
+		<table class="table">
+			<tr>
+				<th>Id</th>
+				<th>Name</th>				
+				<th>Date</th>				
+				<th>Drops</th>
+			</tr>
+			<tr ng-repeat="route in routes">
+				<td>{{route.id}}</td>
+				<td>{{route.name}}</td>
+				<td>{{route.date | date:'yyyy-MM-dd'}}</td>
+				<td>{{route.drops}}</td>
+				<td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">
+				DHL-Paket <small>{{pieces.length}} st från {{docs.length}} PDF:er</small>
+			</h2>
+		</div>
+		<div class="panel-body"></div>
+		<table class="table">
+			<tr>
+				<th>Id</th>
+				<th>Piece</th>
+				<th>Doc</th>
+				<th>Page</th>
+				<th>Row</th>
+				<th>Waybill</th>
+			</tr>
+			<tr ng-repeat="piece in pieces">
+				<td>{{piece.id}}</td>
+				<td>{{piece.piece}}</td>
+				<td>{{piece.doc}}</td>
+				<td>{{piece.page}}</td>
+				<td>{{piece.row}}</td>
+				<td>{{piece.waybill}}</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">
+				UPS-xlsx:er <small>{{upsDocs.length}} st</small>
+			</h2>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Hur ser UPS-xlsx:filen ut idag? <small>Vilken rad börjar det på och i vilka kolumner finns det intressanta?</small>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-9">
+							<div class="input-group">
+							  <span class="input-group-addon">Första raden</span>
+							  <input type="number" class="form-control" placeholder="Rad som det roliga börjar på" min="1" max="100" ng-model="settings.startRow" ng-change="setSettings(settings)">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-3">
+							<div class="input-group">
+							  <span class="input-group-addon">Waybill-kolumn</span>
+							  <input type="number" class="form-control" placeholder="Kolumnindex för WAYBILL" min="1" max="100" ng-model="settings.waybillColumn" ng-change="setSettings(settings)">
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="input-group">
+							  <span class="input-group-addon">Namn-kolumn</span>
+							  <input type="number" class="form-control" placeholder="Kolumnindex för NAMN" min="1" max="100" ng-model="settings.nameColumn" ng-change="setSettings(settings)">
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="input-group">
+							  <span class="input-group-addon">Adress-kolumn</span>
+							  <input type="number" class="form-control" placeholder="Kolumnindex för ADRESS" min="1" max="100" ng-model="settings.addressColumn" ng-change="setSettings(settings)">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body"></div>
+		<table class="table">
+			<tr>
+				<th>Doc</th>
+				<th>Name</th>
+				<th>Date</th>
+			</tr>
+			<tr ng-repeat="upsDoc in upsDocs">
+				<td>{{upsDoc.id}}</td>
+				<td>{{upsDoc.name}}</td>
+				<td>{{upsDoc.date | date:'yyyy-MM-dd'}}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">
+				UPS-Slingor <small>{{routesups.length}} st</small>
+			</h2>
+		</div>
+		<div class="panel-body"></div>
+		<table class="table">
+			<tr>
+				<th>Id</th>
+				<th>Name</th>				
+				<th>Date</th>				
+				<th>Drops</th>
+			</tr>
+			<tr ng-repeat="route in routesups">
+				<td>{{route.id}}</td>
+				<td>{{route.name}}</td>
+				<td>{{route.date | date:'yyyy-MM-dd'}}</td>
+				<td>{{route.drops}}</td>
+				<td>
+			</tr>
+		</table>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">
+				UPS-Paket <small>{{upsPieces.length}} st från {{upsDocs.length}} XLSX:er</small>
+			</h2>
+		</div>
+		<div class="panel-body"></div>
+		<table class="table">
+			<tr>
+				<th>Id</th>
+				<th>Doc</th>
+				<th>Waybill</th>
+				<th>Name</th>
+				<th>Address</th>
+			</tr>
+			<tr ng-repeat="upsPiece in upsPieces">
+				<td>{{upsPiece.id}}</td>
+				<td>{{upsPiece.doc}}</td>
+				<td>{{upsPiece.waybill}}</td>
+				<td>{{upsPiece.name}}</td>
+				<td>{{upsPiece.address}}</td>
+			</tr>
+		</table>
+	</div>
+</div>

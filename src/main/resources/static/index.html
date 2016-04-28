@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" ng-app="ctdhl" ng-controller="MainCtrl">
+<head>
+<meta charset="utf-8">
+<title>Crosstown DHL</title>
+<link rel="icon" type="image/png" href="/img/ct-logga-96x96.png" />
+<link rel="stylesheet" href="/css/app.css" />
+<link rel="stylesheet" href="/lib/3rd/bootstrap.min.css">
+<link rel="stylesheet" href="/lib/3rd/bootstrap-theme.min.css">
+<style type="text/css">
+<!--
+body {
+	padding-top: 70px;
+}
+
+.content {
+	padding: 2em;
+}
+
+.drop-box {
+	background: #F8F8F8;
+	border: 5px dashed #DDD;
+	width: 200px;
+	height: 65px;
+	text-align: center;
+	padding: 35px;
+}
+
+.drop-box.dragover {
+	border: 5px dashed blue;
+}
+
+.piece {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.chart {
+	height:500px;
+	width:1500px;
+}
+-->
+</style>
+</head>
+<body>
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Ellamination™</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="#">Hem</a></li>
+					<li><a href="#/files">DHL/UPS Filer</a></li>
+					<li><a href="#/routes">DHL Slingor</a></li>
+					<li><a href="#/routesups">UPS Slingor++</a></li>
+				</ul>
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input ng-model="searchTerm" type="text" class="form-control"
+							placeholder="Waybill/Paketnr." > <!-- autofocus -->
+					</div>
+					<button ng-click="search(searchTerm)" type="submit"
+						class="btn btn-primary">Snabbsök</button>
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown">Jorå satte <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Hjälp</li>
+							<li><a href="#/intro">3 minuters intro för otåliga</a></li>
+							<li><a href="#/manual">Manual för tålmodiga</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Gurras avdelning</li>
+							<li><a href="#/stats">Statistik</a></li>					
+							<li class="divider"></li>
+							<li class="dropdown-header">Bakom kulisserna</li>
+							<li><a href="#/dashboard">Pilla pilla</a></li>
+							<li><a href="#/tech">Tekniken bakom</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Det viktigaste av allt</li>
+							<li><a href="#/messlife">Budliv kontra kontorsliv</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="content">
+		<!-- Modal -->
+		<div class="modal" id="searchModal" tabindex="-1" role="dialog"
+			aria-labelledby="searchModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="searchModalLabel">Hittade
+							{{results.length}}</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-condensed">
+							<tr>
+								<th>Sida</th>
+								<th>Rad</th>
+								<th>Waybill</th>
+								<th>Piece</th>
+								<th>Dokument</th>
+							</tr>
+							<tr ng-repeat="result in results">
+								<td>{{result.page}}</td>
+								<td>{{result.row}}</td>
+								<td>{{result.waybill}}</td>
+								<td>{{result.piece}}</td>
+								<td>{{result.documentName}}</td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-view></div>
+	</div>
+
+	<script src="/lib/3rd/jquery-1.11.0.min.js"></script>
+	
+	<script src="/lib/angular/angular.js"></script>
+	<script src="/lib/angular/angular-route.js"></script>
+	<script src="/lib/angular/angular-resource.js"></script>
+	<script src="/lib/3rd/angular-file-upload.js"></script>
+	<script src="/lib/3rd/ui-bootstrap-tpls-0.10.0.min.js"></script>
+	<script src="/js/app.js"></script>
+	<script src="/js/services.js"></script>
+	<script src="/js/controllers.js"></script>
+	<script src="/js/filters.js"></script>
+	<script src="/js/directives.js"></script>
+
+	<script src="/lib/3rd/bootstrap.min.js"></script>
+	<script src="/lib/3rd/d3.min.js"></script>
+	<script src="/lib/3rd/angular-charts.min.js"></script>
+
+</body>
+</html>

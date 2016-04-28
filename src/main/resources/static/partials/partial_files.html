@@ -1,0 +1,45 @@
+<meta charset="utf-8">
+
+<div class="page-header">
+	<h1>
+		DHL/UPS-Filer <small>Importera PDF/XLSX:er</small>
+	</h1>
+</div>
+
+<p>
+	<div class="drop-box" ng-file-drop="onFileSelectDHL($files)"
+		ng-show="dropSupported">Dra hit en DHL-fil (.pdf)</div>
+	<div ng-file-drop-available="dropSupported=true"
+		ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+</p>
+
+<p>
+	<div class="drop-box" ng-file-drop="onFileSelectUPS($files)"
+		ng-show="dropSupported">Dra hit en UPS-fil (.xlsx)</div>
+	<div ng-file-drop-available="dropSupported=true"
+		ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+</p>
+
+<div class="container" ng-show="docs && docs.length > 0">
+	<h2>DHL</h2>
+	<table class="table table-striped">
+		<tr>
+			<th>Namn</th>
+		</tr>
+		<tr ng-repeat="doc in docs">
+			<td>{{doc.name}}</td>
+		</tr>
+	</table>
+</div>
+
+<div class="container" ng-show="upsDocs && upsDocs.length > 0">
+	<h2>UPS</h2>
+	<table class="table table-striped">
+		<tr>
+			<th>Namn</th>
+		</tr>
+		<tr ng-repeat="upsDoc in upsDocs">
+			<td>{{upsDoc.name}}</td>
+		</tr>
+	</table>
+</div>
