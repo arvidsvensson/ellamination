@@ -136,9 +136,10 @@ public class Row {
 		public Builder addTo(String text) {
 			if (receiver == null) {
 				receiver = text;
-			} else {
+			} else if (address == null) {
 				address = text;
 			}
+			
 			return this;
 		}
 
