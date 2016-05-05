@@ -31,7 +31,7 @@ import cc.crosstown.dhl.model.Scan;
 import cc.crosstown.dhl.model.Scan.Result;
 import cc.crosstown.dhl.pdf.Document;
 import cc.crosstown.dhl.pdf.PdfParser;
-import cc.crosstown.dhl.pdf.Decorator2;
+import cc.crosstown.dhl.pdf.Decorator;
 import cc.crosstown.ellamination.DocRepository;
 import cc.crosstown.ellamination.PieceRepository;
 import cc.crosstown.ellamination.RouteRepository;
@@ -48,14 +48,14 @@ public class Rest {
 	private DocRepository docs;
 	private PieceRepository pieces;
 	private RouteRepository routes;
-	private Decorator2 decorator2;
+	private Decorator decorator;
 
 	@Autowired
-	public Rest(DocRepository docs, PieceRepository pieces, RouteRepository routes, Decorator2 decorator2) {
+	public Rest(DocRepository docs, PieceRepository pieces, RouteRepository routes, Decorator decorator) {
 		this.docs = docs;
 		this.pieces = pieces;
 		this.routes = routes;
-		this.decorator2 = decorator2;
+		this.decorator = decorator;
 	}
 
 	@RequestMapping("drop")
@@ -352,7 +352,7 @@ public class Rest {
 			return Collections.emptyList();
 		}
 				
-		List<String> urls = Lists.newArrayList(decorator2.generate(route));
+		List<String> urls = Lists.newArrayList(decorator.generate(route));
 		route.setUrls(urls);
 		routes.save(route);
 		return urls;
