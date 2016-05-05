@@ -126,12 +126,6 @@ angular.module('ctdhl.services', []).
 		  	success(callback.success).
 		  	error(callback.error);
 	  };
-
-	  this.printRoute2 = function(id, callback) {
-		  $http.get('/api/route/print2/' + id).
-		  	success(callback.success).
-		  	error(callback.error);
-	  };
 }]).
   
   service('ctups', ['$http', function($http) {

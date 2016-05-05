@@ -237,7 +237,7 @@ public class UPSRest {
 		UPSDocument doc = parser.parse(new ByteArrayInputStream(baos.toByteArray()));
 		
 		if (null != docs.findByName(doc.getName())) {
-			return new ResponseEntity<String>("Already uploaded: " + doc.getName(), HttpStatus.OK);
+			return new ResponseEntity<>("Already uploaded: " + doc.getName(), HttpStatus.OK);
 		}
 		
 		Date date = new Date();
@@ -249,6 +249,6 @@ public class UPSRest {
 			pieces.save(UPSPiece.create(row));
 		}
 		
-		return new ResponseEntity<String>("Uploaded UPS'" + doc.getName() + "', " + size + " bytes", HttpStatus.OK);
+		return new ResponseEntity<>("Uploaded UPS'" + doc.getName() + "', " + size + " bytes", HttpStatus.OK);
 	}
 }

@@ -83,7 +83,7 @@ public class Piece {
 	}	
 	
 	public static List<Piece> create(Row row) {
-		List<Piece> result = new ArrayList<Piece>();
+		List<Piece> result = new ArrayList<>();
 		
 		List<String> pieces = row.getPieces();
 		for (String name : pieces) {

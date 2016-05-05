@@ -252,13 +252,6 @@ angular.module('ctdhl.controllers', []).
 			  getRoutes();
 		  }});
 	  };		  
-
-	  $scope.print2 = function(route) {
-		  $scope.lastRoute = route;
-		  ct.printRoute2(route.id, {success: function(data) {
-			  getRoutes();
-		  }});
-	  };		  
 }]).
     
   controller('UPSCtrl', ['$scope', 'ctups', 'audio', function($scope, ctups, audio) {

@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
@@ -30,7 +29,6 @@ import cc.crosstown.dhl.model.Route.Drop;
 import cc.crosstown.dhl.model.Row;
 import cc.crosstown.dhl.model.Scan;
 import cc.crosstown.dhl.model.Scan.Result;
-import cc.crosstown.dhl.pdf.Decorator;
 import cc.crosstown.dhl.pdf.Document;
 import cc.crosstown.dhl.pdf.PdfParser;
 import cc.crosstown.dhl.pdf.Decorator2;
@@ -38,8 +36,6 @@ import cc.crosstown.ellamination.DocRepository;
 import cc.crosstown.ellamination.PieceRepository;
 import cc.crosstown.ellamination.RouteRepository;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import org.apache.commons.io.IOUtils;
@@ -52,15 +48,13 @@ public class Rest {
 	private DocRepository docs;
 	private PieceRepository pieces;
 	private RouteRepository routes;
-	private Decorator decorator;
 	private Decorator2 decorator2;
 
 	@Autowired
-	public Rest(DocRepository docs, PieceRepository pieces, RouteRepository routes, Decorator decorator, Decorator2 decorator2) {
+	public Rest(DocRepository docs, PieceRepository pieces, RouteRepository routes, Decorator2 decorator2) {
 		this.docs = docs;
 		this.pieces = pieces;
 		this.routes = routes;
-		this.decorator = decorator;
 		this.decorator2 = decorator2;
 	}
 
@@ -331,7 +325,7 @@ public class Rest {
 		Document doc = parser.parse(new ByteArrayInputStream(baos.toByteArray()));
 		
 		if (null != docs.findByName(doc.getName())) {
-			return new ResponseEntity<String>("Already uploaded: " + doc.getName(), HttpStatus.OK);
+			return new ResponseEntity<>("Already uploaded: " + doc.getName(), HttpStatus.OK);
 		}
 		
 		Date date = dateFromDocName(doc.getName());
@@ -343,7 +337,7 @@ public class Rest {
 			pieces.save(Piece.create(row));
 		}
 		
-		return new ResponseEntity<String>("Uploaded DHL'" + doc.getName() + "', " + size + " bytes", HttpStatus.OK);
+		return new ResponseEntity<>("Uploaded DHL'" + doc.getName() + "', " + size + " bytes", HttpStatus.OK);
 	}
 
 	private Date dateFromDocName(String name) throws ParseException {
@@ -353,27 +347,6 @@ public class Rest {
 
 	@RequestMapping("route/print/{rid}")
 	public List<String> printRoute(@PathVariable("rid") String rid) throws Exception {
-		Route route = routes.findOne(rid);
-		if (route == null) {
-			return Collections.emptyList();
-		}
-		
-		Set<String> docIds = route.getDocIds();
-		Iterable<Doc> docs = Iterables.transform(docIds, new Function<String, Doc>() {
-			@Override
-			public Doc apply(String docId) {
-				return Rest.this.docs.findOne(docId);
-			}
-		});
-		
-		List<String> urls = decorator.generate(route, docs);
-		route.setUrls(urls);
-		routes.save(route);
-		return urls;
-	}
-
-	@RequestMapping("route/print2/{rid}")
-	public List<String> printRoute2(@PathVariable("rid") String rid) throws Exception {
 		Route route = routes.findOne(rid);
 		if (route == null) {
 			return Collections.emptyList();

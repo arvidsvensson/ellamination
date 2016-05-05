@@ -28,7 +28,6 @@
 			<div class="row">
 				<div class="col-sm-5">
 					<form class="form-inline">
-						{{route.id == lastRoute.id}}
 						<input type="text" class="form-control" ng-model="scan"	placeholder="Waybill/Paketnr."
 							ng-attr-autofocus="{{route.id == lastRoute.id}}"
 							to-focus="isLast(route)"
@@ -39,9 +38,6 @@
 						</button>
 						<button class="btn btn-success" ng-click="print(route)" ng-disabled="route.drops.length == 0">
 							<span class="glyphicon glyphicon-road"></span>
-						</button>
-						<button class="btn btn-success" ng-click="print2(route)" ng-disabled="route.drops.length == 0">
-							<span class="glyphicon glyphicon-sunglasses"></span>
 						</button>
 						<a ng-show="route.urls && route.urls.length > 0"
 								ng-repeat="url in route.urls" type=""
@@ -77,10 +73,6 @@
 					<td>{{drop.piece.piece}}</td>
 					<td>
 						<div class="btn-group btn-group-xs">
-							<button ng-disabled="!$last" ng-click="combineLast(route)"
-								type="button" class="btn btn-primary">
-								<span class="glyphicon glyphicon-circle-arrow-up"></span>
-							</button>
 							<button ng-click="removePiece(route, drop.piece)"
 								type="button" class="btn btn-danger">
 								<span class="glyphicon glyphicon-remove"></span>

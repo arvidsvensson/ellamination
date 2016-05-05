@@ -109,7 +109,7 @@ public class Row {
 		private String receiver;
 		private String address;
 		private String waybill;
-		private List<String> pieces = new ArrayList<String>();
+		private List<String> pieces = new ArrayList<>();
 		private boolean charge;
 		private String documentName;
 		

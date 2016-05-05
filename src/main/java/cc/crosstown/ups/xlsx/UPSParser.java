@@ -70,7 +70,7 @@ public class UPSParser implements Parser<UPSDocument> {
 
 	@Override
 	public UPSDocument parse(InputStream input) throws IOException {
-		List<UPSRow> rows = new ArrayList<UPSRow>();
+		List<UPSRow> rows = new ArrayList<>();
 				
 		XSSFWorkbook workbook = new XSSFWorkbook(input);
 		XSSFSheet sheet = workbook.getSheetAt(0);

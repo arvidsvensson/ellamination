@@ -42,7 +42,7 @@ public class UPSRoute {
 	
 	private Date date;
 	
-	private ArrayList<Drop> drops = new ArrayList<Drop>();
+	private ArrayList<Drop> drops = new ArrayList<>();
 	
 	private String url;
 

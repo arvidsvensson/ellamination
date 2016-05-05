@@ -43,43 +43,7 @@ private static final String STATIC_GENERATED = "./static/generated";
 			generated.mkdirs();
 		}
 	}
-	
-    public static void main(String[] args) throws IOException, DocumentException {                
-        Route route = new Route("Östermalm", new Date());
-        add(route, 1, 1, "(J)JD014600002374483310", "6079333621", "Happy Socks AB", "Kungsgatan 12-14");
-        add(route, 1, 2, "(J)JD014600002374483311", "6079333621", "Angry Socks AB", "Kungsgatan 12-15");
-        add(route, 1, 3, "(J)JD014600002374483312", "6079333621", "Stinky Socks AB", "Kungsgatan 12-16");
-        add(route, 1, 4, "(J)JD014600002374483313", "6079333621", "Odd Socks AB", "Kungsgatan 12-17");
-        add(route, 2, 1, "(J)JD014600002374483314", "6079333621", "Old Socks AB", "Kungsgatan 12-18");
-        add(route, 2, 2, "(J)JD014600002374483315", "6079333621", "New Socks AB", "Kungsgatan 12-19");
-        add(route, 3, 1, "(J)JD014600002374483316", "6079333621", "Blue Socks AB", "Kungsgatan 12-20");
-        add(route, 3, 2, "(J)JD014600002374483317", "6079333621", "Even Bluer Socks AB", "Kungsgatan 12-21");
-        add(route, 4, 1, "(J)JD014600002374483318", "6079333621", "Dirty Socks AB", "Kungsgatan 12-22");
-        add(route, 4, 2, "(J)JD014600002374483319", "6079333621", "Clean Socks AB", "Kungsgatan 12-23");
-        add(route, 4, 3, "(J)JD014600002374483320", "6079333621", "Cheesy Socks AB", "Kungsgatan 12-23");
-        add(route, 12, 27, "(J)JD014600002374483321", "6079333621", "Missing Socks AB", "Kungsgatan 12-23");
-
-        new Decorator2().generate(route);
-    }
-    
-    private static void add(Route route, int page, int row, String piece, String waybill, String receiver, String address) {
-    	Row r = new Row.Builder()
-	    	.withPage(page)
-	    	.withRow(row)
-	    	.addTo(receiver)
-	    	.addTo(address)
-	    	.withPiece(piece)
-	    	.withDocumentName("abc")
-	    	.withWaybill(waybill)
-	    	.build();
-    	r.setDoc("abc123");
-		List<Piece> pieces = Piece.create(r);
 	    
-	    for (Piece p : pieces) {
-			route.add(p);
-		}
-    }
-    
     public String generate(Route route) throws IOException, DocumentException {
  		String url = "DHL2-" + route.getId() + "_" + route.getDrops().size() + ".pdf";
 

@@ -57,13 +57,13 @@ public class PdfParser implements Parser<Document> {
 	
 	private static class Listener implements RenderListener {
 		private String name;
-		private List<Builder> builders = new ArrayList<Builder>();
+		private List<Builder> builders = new ArrayList<>();
 		protected int page;
 		
-		private AtomicReference<Rectangle2D.Float> receiver = new AtomicReference<Float>();
-		private AtomicReference<Rectangle2D.Float> id = new AtomicReference<Float>();
-		private AtomicReference<Rectangle2D.Float> puDate = new AtomicReference<Float>();		
-		private AtomicReference<Rectangle2D.Float> charge = new AtomicReference<Float>();
+		private AtomicReference<Rectangle2D.Float> receiver = new AtomicReference<>();
+		private AtomicReference<Rectangle2D.Float> id = new AtomicReference<>();
+		private AtomicReference<Rectangle2D.Float> puDate = new AtomicReference<>();		
+		private AtomicReference<Rectangle2D.Float> charge = new AtomicReference<>();
 		private Mode mode = Mode.HEADER;
 		
 		private Builder builder;
@@ -126,6 +126,10 @@ public class PdfParser implements Parser<Document> {
 					name = renderInfo.getText();
 				}
 				
+				return;
+				
+			default:
+				// ignore
 				return;
 			}
 		}
@@ -213,10 +217,5 @@ public class PdfParser implements Parser<Document> {
 		public final void renderImage(ImageRenderInfo renderInfo) {
 			// ignore
 		}
-	}
-	
-	public static void main(String[] args) throws IOException {
-		Document document = new PdfParser().parse(PdfParser.class.getResourceAsStream("dhl.pdf"));
-		System.err.println(document);
-	}
+	}	
 }

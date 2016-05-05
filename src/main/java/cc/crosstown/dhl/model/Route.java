@@ -40,7 +40,7 @@ public class Route {
 	
 	private Date date;
 	
-	private ArrayList<Drop> drops = new ArrayList<Drop>();
+	private ArrayList<Drop> drops = new ArrayList<>();
 
 	private List<String> urls;
 
@@ -169,7 +169,7 @@ public class Route {
 	}
 
 	public Set<String> getDocIds() {
-		Set<String> ids = new HashSet<String>();
+		Set<String> ids = new HashSet<>();
 		for (Drop drop : drops) {
 			String doc = drop.piece.getDoc();
 			if (!"ct-empty".equals(doc)) {
