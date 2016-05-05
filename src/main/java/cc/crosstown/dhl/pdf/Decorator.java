@@ -43,7 +43,7 @@ private static final String STATIC_GENERATED = "./static/generated";
 	}
 	    
     public String generate(Route route) throws IOException, DocumentException {
- 		String url = "DHL2-" + route.getId() + "_" + route.getDrops().size() + ".pdf";
+ 		String url = "DHL-" + route.getId() + "_" + route.getDrops().size() + ".pdf";
 
         Document document = new Document(PageSize.A4.rotate());
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("./static/generated/" + url));
