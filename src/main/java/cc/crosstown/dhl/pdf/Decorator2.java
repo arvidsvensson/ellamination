@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -79,7 +81,7 @@ private static final String STATIC_GENERATED = "./static/generated";
     }
     
     public String generate(Route route) throws IOException, DocumentException {
-		String url = "DHL2-" + route.getId() + "_" + route.getDrops().size() + ".pdf";
+ 		String url = "DHL2-" + route.getId() + "_" + route.getDrops().size() + ".pdf";
 
         Document document = new Document(PageSize.A4.rotate());
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("./static/generated/" + url));
@@ -92,7 +94,7 @@ private static final String STATIC_GENERATED = "./static/generated";
         AtomicInteger line = new AtomicInteger(1);
         for (List<Piece> page : pages) {
 			document.newPage();
-			createPage(document, route.getName() + " " + pieces.size(), directContent, page, pageNumber++, pages.size(), line);
+			createPage(document, route, route.getName() + " " + pieces.size(), directContent, page, pageNumber++, pages.size(), line);
 		}
         
         document.close();
@@ -109,13 +111,36 @@ private static final String STATIC_GENERATED = "./static/generated";
 		});
     }
     
-    private void createPage(Document document, String name, PdfContentByte directContent, List<Piece> pieces, int pageNumber, int pagesTotal, AtomicInteger line) throws MalformedURLException, DocumentException, IOException {
-		   createHeader(document);        
+    private void createPage(Document document, Route route, String name, PdfContentByte directContent, List<Piece> pieces, int pageNumber, int pagesTotal, AtomicInteger line) throws MalformedURLException, DocumentException, IOException {
+		   createHeader(document, route);        
 		   createBody(document, directContent, pieces, line);
 		   createFooter(document, directContent, name, pageNumber, pagesTotal);    	
     }
 
-	private void createHeader(Document document) throws DocumentException, MalformedURLException, IOException {
+    private String getDocName(Route route) {
+    	return route.getDrops().get(0).getPiece().getDocumentName();
+    }
+    
+    private Date getDeliveryDate(Route route) {
+    	String docName = getDocName(route);
+    	try {
+			return new SimpleDateFormat("dd/MM/yyyy").parse(docName.split(" ")[0]);
+		} catch (ParseException e) {
+			return new Date();
+		}
+    }
+    
+    private String getServiceCenter(Route route) {
+    	String docName = getDocName(route);
+    	return docName.split(" ")[1];
+    }
+
+    private String getRouteId(Route route) {
+    	String docName = getDocName(route);
+    	return docName.split(" ")[2] + " " + docName.split(" ")[3];
+    }
+
+	private void createHeader(Document document, Route route) throws DocumentException, MalformedURLException, IOException {
 		Image logo = Image.getInstance(getClass().getResource("/dhl-logga.png"));
 		PdfPTable table = new PdfPTable(9);
 		table.setWidthPercentage(100);
@@ -134,15 +159,17 @@ private static final String STATIC_GENERATED = "./static/generated";
 		cell.setPhrase(new Phrase("Delivery Date", font));
 		table.addCell(cell);
 
-		cell.setPhrase(new Phrase("24.04.2016", font));
+		String date = new SimpleDateFormat("dd.MM.yyyy").format(getDeliveryDate(route));
+		
+		cell.setPhrase(new Phrase(date, font));
 		table.addCell(cell);
 		cell.setPhrase(new Phrase("Service Center:", font));
 		table.addCell(cell);
-		cell.setPhrase(new Phrase("STO-", font));
+		cell.setPhrase(new Phrase(getServiceCenter(route), font));
 		table.addCell(cell);
 		cell.setPhrase(new Phrase("Courier Route ID:", font));
 		table.addCell(cell);
-		cell.setPhrase(new Phrase("A29A A", font));
+		cell.setPhrase(new Phrase(getRouteId(route), font));
 		table.addCell(cell);
 		cell.setPhrase(new Phrase("Courier ID:", font));
 		table.addCell(cell);
@@ -176,7 +203,6 @@ private static final String STATIC_GENERATED = "./static/generated";
 		code39ext.setTextAlignment(Element.ALIGN_BOTTOM);
 		code39ext.setBarHeight(20);
 		code39ext.setExtended(true);
-//		code39ext.setGuardBars(true);
 		code39ext.setAltText(piece.getPiece() + "     " + piece.getWaybill() + "     " + piece.getPage() + " / " + piece.getRow());
 		code39ext.setSize(12.5f);
 		code39ext.setBaseline(13);
