@@ -1,6 +1,8 @@
 .project
 .classpath
 .settings/*
+.idea/*
+*.iml
 target/*
 static/*
 data/*
