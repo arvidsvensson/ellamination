@@ -57,18 +57,16 @@
 			<table class="table table-striped" ng-show="route.drops && route.drops.length > 0">
 				<tr>
 					<th>Plats</th>
-					<th>Stopp</th>
-					<th>Sida</th>
-					<th>Rad</th>
+					<th>Mottagare</th>
+					<th>Adress</th>
 					<th>Waybill</th>
 					<th>Paketnr.</th>
 					<th>Kommando</th>
 				</tr>
 				<tr ng-repeat="drop in route.drops">
 					<td>{{$index + 1}}</td>
-					<td>{{drop.drop}}</td>
-					<td>{{drop.piece.page | dashZero}}</td>
-					<td>{{drop.piece.row | dashZero}}</td>
+					<td>{{drop.piece.receiver || ""}}</td>
+					<td>{{drop.piece.address || ""}}</td>
 					<td>{{drop.piece.waybill}}</td>
 					<td>{{drop.piece.piece}}</td>
 					<td>
