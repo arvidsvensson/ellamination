@@ -97,7 +97,7 @@ public class UPSDecorator {
 //		font.setStyle(Font.BOLD);
 //		cb.beginText();
 //		ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, new Phrase(
-//				route.getName() + " (" + route.getDrops().size() + ") " + page + "/" + pages, font), 360, offset, 0);
+//				route.getName() + " (" + route.getPieces().size() + ") " + page + "/" + pages, font), 360, offset, 0);
 //		cb.endText();
 		
 		cb.beginText();

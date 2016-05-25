@@ -36,7 +36,7 @@
 								type="submit">
 							Lägg till
 						</button>
-						<button class="btn btn-success" ng-click="print(route)" ng-disabled="route.drops.length == 0">
+						<button class="btn btn-success" ng-click="print(route)" ng-disabled="route.pieces.length == 0">
 							<span class="glyphicon glyphicon-road"></span>
 						</button>
 						<a ng-show="route.urls && route.urls.length > 0"
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<br/>
-			<table class="table table-striped" ng-show="route.drops && route.drops.length > 0">
+			<table class="table table-striped" ng-show="route.pieces && route.pieces.length > 0">
 				<tr>
 					<th>Plats</th>
 					<th>Mottagare</th>
@@ -63,15 +63,15 @@
 					<th>Paketnr.</th>
 					<th>Kommando</th>
 				</tr>
-				<tr ng-repeat="drop in route.drops">
+				<tr ng-repeat="piece in route.pieces">
 					<td>{{$index + 1}}</td>
-					<td>{{drop.piece.receiver || ""}}</td>
-					<td>{{drop.piece.address || ""}}</td>
-					<td>{{drop.piece.waybill}}</td>
-					<td>{{drop.piece.piece}}</td>
+					<td>{{piece.receiver || ""}}</td>
+					<td>{{piece.address || ""}}</td>
+					<td>{{piece.waybill}}</td>
+					<td>{{piece.piece}}</td>
 					<td>
 						<div class="btn-group btn-group-xs">
-							<button ng-click="removePiece(route, drop.piece)"
+							<button ng-click="removePiece(route, piece)"
 								type="button" class="btn btn-danger">
 								<span class="glyphicon glyphicon-remove"></span>
 							</button>

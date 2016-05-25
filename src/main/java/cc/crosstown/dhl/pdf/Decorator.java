@@ -2,9 +2,7 @@ package cc.crosstown.dhl.pdf;
 
 import cc.crosstown.dhl.model.Piece;
 import cc.crosstown.dhl.model.Route;
-import cc.crosstown.dhl.model.Route.Drop;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -43,14 +41,14 @@ private static final String STATIC_GENERATED = "./static/generated";
 	}
 	    
     public String generate(Route route) throws IOException, DocumentException {
- 		String url = "DHL-" + route.getId() + "_" + route.getDrops().size() + ".pdf";
+ 		String url = "DHL-" + route.getId() + "_" + route.getPieces().size() + ".pdf";
 
         Document document = new Document(PageSize.A4.rotate());
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("./static/generated/" + url));
         document.open();
         PdfContentByte directContent = writer.getDirectContent();
         
-        List<Piece> pieces = pieces(route);
+        List<Piece> pieces = route.getPieces();
         List<List<Piece>> pages = Lists.partition(pieces, 10);
         int pageNumber = 1;
         AtomicInteger line = new AtomicInteger(1);
@@ -62,15 +60,6 @@ private static final String STATIC_GENERATED = "./static/generated";
         document.close();
         
         return url;
-    }
-    
-    private List<Piece> pieces(Route route) {
-    	return Lists.transform(route.getDrops(), new Function<Drop, Piece>() {
-			@Override
-			public Piece apply(Drop drop) {
-				return drop.getPiece();
-			}
-		});
     }
     
     private void createPage(Document document, DocName docName, String name, PdfContentByte directContent, List<Piece> pieces, int pageNumber, int pagesTotal, AtomicInteger line) throws MalformedURLException, DocumentException, IOException {
@@ -324,7 +313,7 @@ private static final String STATIC_GENERATED = "./static/generated";
     	private DocName(Route route) {
     		try {
     			// "14/06/2012 ARN A23A A 01"
-				String docName = route.getDrops().get(0).getPiece().getDocumentName();
+				String docName = route.getPieces().get(0).getDocumentName();
 				String[] parts = docName.split("\\s+");
 				date = new SimpleDateFormat("dd/MM/yyyy").parse(parts[0]);				
 				service = parts[1];

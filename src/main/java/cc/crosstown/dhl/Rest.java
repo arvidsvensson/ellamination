@@ -25,7 +25,6 @@ import cc.crosstown.common.Parser;
 import cc.crosstown.dhl.model.Doc;
 import cc.crosstown.dhl.model.Piece;
 import cc.crosstown.dhl.model.Route;
-import cc.crosstown.dhl.model.Route.Drop;
 import cc.crosstown.dhl.model.Row;
 import cc.crosstown.dhl.model.Scan;
 import cc.crosstown.dhl.model.Scan.Result;
@@ -88,9 +87,9 @@ public class Rest {
 			return false;
 		}
 		
-		for (Drop drop : route.getDrops()) {
-			if ("ct-empty".equals(drop.getPiece().getDoc())) {
-				pieces.delete(drop.getPiece().getId());
+		for (Piece piece : route.getPieces()) {
+			if ("ct-empty".equals(piece.getDoc())) {
+				pieces.delete(piece.getId());
 			}
 		}
 		routes.delete(rid);
@@ -275,21 +274,6 @@ public class Rest {
 		Route route = routes.findOne(rid);
 		logger.info("route find: " + route);
 		return route;
-	}
-
-	@RequestMapping("route/combine/{rid}")
-	public boolean routeCombine(@PathVariable("rid") String rid) throws Exception {
-		Route route = routes.findOne(rid);
-		if (route == null) {
-			return false;
-		}
-		
-		if (!route.combineLast()) {
-			return false;
-		}
-		logger.info("route combine: " + route);
-		routes.save(route);
-		return true;
 	}
 
 	@RequestMapping("routes")

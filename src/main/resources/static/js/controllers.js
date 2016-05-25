@@ -232,13 +232,6 @@ angular.module('ctdhl.controllers', []).
 		  }});
 	  };
 	  
-	  $scope.combineLast = function(route) {
-		  $scope.lastRoute = route;
-		  ct.combineRoute(route.id, {success: function(data) {
-			  getRoutes();
-		  }});
-	  };
-	  
 	  $scope.removePiece = function(route, piece) {
 		  $scope.lastRoute = route;
 		  ct.deleteRoutePiece(route.id, piece.id, {success: function(data) {

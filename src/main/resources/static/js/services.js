@@ -90,12 +90,6 @@ angular.module('ctdhl.services', []).
 		  	success(callback.success).
 		  	error(callback.error);
 	  };
-	  
-	  this.combineRoute = function(id, callback) {
-		  $http.get('/api/route/combine/' + id).
-		  	success(callback.success).
-		  	error(callback.error);
-	  };
 	  	  
 	  this.getPieces = function(callback) {
 		  $http.get('/api/pieces').
