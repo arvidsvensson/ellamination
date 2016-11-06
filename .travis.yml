@@ -1,13 +1,3 @@
 language: java
 jdk:
 - oraclejdk8
-before_deploy:
-  - "mvn -DskipTests package"
-  - export JAR=$(ls target/ellamination-*.jar)
-deploy:
-  provider: releases
-  api_key:
-    secure: CRrT0RWjpXpyXmONWMgB07Q5QjgFWRRSiR8A4GBAQSbBwEBp+1NTouBSsGc4WY46J6fVu3LvUS6yDvotLbj2uWmx3oxiUxwlaYLim4pI56GtZk4Iwo3OOVNdzKks9dQC0WqGZrBDBoc6aNuKttXaHGHAeJ3YugeDL0aFvmsWuLdlfJgZ7OxA0e6j2iYQY79mFLEE54CsH1sEbOc0fMGrWqR3kYHp8yI4ntERSrDaBDasBWv+Bk+lAJIJUJFbqPPhgqSYIk5CxNMOoYgc+fqERo1+8fyKm9AfsiZftlMYHBioNAu1B3mS/x+X09p8ww0QGIi0uMKfyyHfhSNYt7V7a/pZ+7oxYPOxjfirUKj/0MDTVT7jNJ4Sy5/IKoG4mG+FDENHTgsyWnox5Pjef7tChsLfAh7EF6DrtyWZr9E+9xQk5XjHiME+1hcRabCaBfdisO9HtsxupYOdZ8Sf33DQgsOZwBWqCJbxlKu6y9M7zwDEAjqk6u6IY55tCd714GOHKOHK8Qq+i2yxwmD6hnok69omtOWd4RvSZqRBhmsUs28gH7wCY8SRb1S+1XDLA+jYhx4GdCu/gPmopFG9qdeXdQ2aFITH/NrXSGAVFYPt871fPhD2B4T0Kmuu+JeR+iyVGH6EeXHItcGdUnmSIe3wS4UjY+gmNKnxA19FVmGWHoo=
-  file: "${JAR}"
-  on:
-    repo: arvidsvensson/ellamination
